@@ -47,7 +47,7 @@ public class Generator {
     public void generateClass(String className, List<String> attrs) {
         // generate class
         StringBuilder sb = new StringBuilder();
-        sb.append("public class " + className + " {\n");
+        sb.append("class " + className + " {\n");
 
         for (String attr : attrs) {
             sb.append("    private " + "String " + attr + ";\n");
@@ -72,11 +72,12 @@ public class Generator {
         Path path = Path.of(OUTPUT_DIR + className + ".java");
         try {
             if (Files.exists(path)) {
-                logger.info("File already exists");
+                logger.warning("File already exists");
                 return;
             }
             Files.createFile(path);
             Files.writeString(path, content);
+            logger.info("File created successfully:" + path);
         } catch (Exception e) {
             logger.severe("Failed to create file" + e.getMessage());
         }
